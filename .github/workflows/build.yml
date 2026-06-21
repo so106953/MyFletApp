@@ -3,12 +3,13 @@ name: Flet 跨平台全自动打包 (Windows + Android)
 on:
   push:
     tags:
-      - 'v*' # 只要你发布新版本标签（如 v1.0.0），就会触发打包
+      - 'v*'
 
 jobs:
-  # ================= 任务 1：打包 Windows (.exe) =================
   build-windows:
     runs-on: windows-latest
+    env:
+      PYTHONIOENCODING: 'utf-8'
     steps:
       - name: 检出代码
         uses: actions/checkout@v4
@@ -44,9 +45,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  # ================= 任务 2：打包安卓 (.apk) =================
   build-android:
     runs-on: ubuntu-latest
+    env:
+      CI: 'true'
     steps:
       - name: 检出代码
         uses: actions/checkout@v4
