@@ -36,10 +36,12 @@ jobs:
         run: |
           echo y | flet build windows
 
+      # 修正：直接将打包生成的整个 output 目录打包，确保 exe 及其依赖文件被完整压缩
       - name: 压缩打包文件
         shell: powershell
         run: |
-          Compress-Archive -Path build/windows/* -DestinationPath Flet-App-Windows.zip
+          Compress-Archive -Path build/windows/build/exe.win* -DestinationPath Flet-App-Windows.zip -ErrorAction SilentlyContinue
+          if (-not (Test-Path Flet-App-Windows.zip)) { Compress-Archive -Path build/windows/* -DestinationPath Flet-App-Windows.zip }
 
       - name: 上传到 Release 页面
         uses: softprops/action-gh-release@v2
@@ -83,9 +85,12 @@ jobs:
         run: |
           echo "y" | flet build apk
           
+      # 修正：将通配符范围扩大，精准匹配 Flet 在 ubuntu 虚拟机中生成的不同架构 apk 路径
       - name: 上传 APK 到 Release 页面
         uses: softprops/action-gh-release@v2
         with:
-          files: build/app/outputs/flutter-apk/*.apk
+          files: |
+            build/app/outputs/flutter-apk/*.apk
+            output/apk/*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
