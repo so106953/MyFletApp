@@ -6,6 +6,7 @@ on:
       - 'v*'
 
 jobs:
+  # ================= 任务 1：打包 Windows (.exe) =================
   build-windows:
     runs-on: windows-latest
     env:
@@ -32,7 +33,7 @@ jobs:
 
       - name: 编译 Windows 软件 (.exe)
         run: |
-          flet build windows --no-rich
+          flet build windows --no-rich --no-interactive --product "MyFletApp" --company "zhu" --version "1.0.0" --description "用 Python 开发的跨平台软件"
 
       - name: 压缩打包文件
         run: |
@@ -45,6 +46,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  # ================= 任务 2：打包安卓 (.apk) =================
   build-android:
     runs-on: ubuntu-latest
     env:
@@ -77,7 +79,7 @@ jobs:
 
       - name: 编译安卓 APK
         run: |
-          flet build apk --no-rich
+          flet build apk --no-rich --no-interactive --product "MyFletApp" --version "1.0.0"
 
       - name: 上传 APK 到 Release 页面
         uses: softprops/action-gh-release@v2
