@@ -34,7 +34,7 @@ jobs:
       - name: 编译 Windows 软件 (.exe)
         shell: cmd
         run: |
-          echo y | flet build windows
+          echo y | flet build windows --include-packages certifi,requests
 
       - name: 压缩打包文件
         shell: powershell
