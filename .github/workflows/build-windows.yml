@@ -30,10 +30,23 @@ jobs:
           pip install flet rich pyinstaller
           if (Test-Path requirements.txt) { pip install -r requirements.txt }
 
-      - name: 编译 Windows 软件
+      # 新增：如果检测到根目录有 app.ico，自动将其拷贝到 assets 目录参与打包编译
+      - name: 配置软件图标
+        shell: powershell
+        run: |
+          if (Test-Path app.ico) {
+            New-Item -ItemType Directory -Force -Path assets
+            Copy-Item -Path app.ico -Destination assets/icon.ico -Force
+            Write-Host "图标已就绪，准备打包..."
+          } else {
+            Write-Host "未检测到 app.ico，将使用默认图标。"
+          }
+
+      # 修改：加入 --icon 参数，强制将图标赋予生成的 exe 文件
+      - name: 编译 Windows 软件 (已绑定图标)
         shell: cmd
         run: |
-          flet pack main.py
+          flet pack main.py --icon app.ico
 
       - name: 压缩打包文件
         shell: powershell
