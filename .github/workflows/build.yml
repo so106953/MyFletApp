@@ -28,14 +28,16 @@ jobs:
       - name: 安装 Python 依赖
         run: |
           python -m pip install --upgrade pip
-          pip install --upgrade flet rich
+          pip install flet rich
           if (Test-Path requirements.txt) { pip install -r requirements.txt }
 
       - name: 编译 Windows 软件 (.exe)
+        shell: cmd
         run: |
-          flet build windows --no-rich --no-interactive --product "MyFletApp" --company "zhu" --version "1.0.0" --description "用 Python 开发的跨平台软件"
+          echo y | flet build windows
 
       - name: 压缩打包文件
+        shell: powershell
         run: |
           Compress-Archive -Path build/windows/* -DestinationPath Flet-App-Windows.zip
 
@@ -74,13 +76,13 @@ jobs:
       - name: 安装 Python 依赖
         run: |
           python -m pip install --upgrade pip
-          pip install --upgrade flet rich
+          pip install flet rich
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: 编译安卓 APK
         run: |
-          flet build apk --no-rich --no-interactive --product "MyFletApp" --version "1.0.0"
-
+          echo "y" | flet build apk
+          
       - name: 上传 APK 到 Release 页面
         uses: softprops/action-gh-release@v2
         with:
