@@ -45,6 +45,7 @@ jobs:
         with:
           files: |
             build/app/outputs/flutter-apk/*.apk
+            build/apk/*.apk    # 👈 已为您完美适配新版 Flet 的产物输出路径
             output/apk/*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
