@@ -86,6 +86,6 @@ jobs:
       - name: 上传 APK 到 Release 页面
         uses: softprops/action-gh-release@v2
         with:
-          files: build/apk/app-release.apk
+          files: build/app/outputs/flutter-apk/*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
