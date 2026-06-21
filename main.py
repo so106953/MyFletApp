@@ -13,18 +13,15 @@ ACCENT = "#52796F"
 # 安全的系统本地中文字体族
 FONT_F = "Segoe UI, Microsoft YaHei, 微软雅黑, Sans-Serif"
 
-
 def format_time(seconds: int) -> str:
     m, s = divmod(max(0, seconds), 60)
     return f"{m:02d}:{s:02d}"
 
-
 def main(page: ft.Page):
     # ==========================================
-    # 👇 完美对接：格式已为您安全更改为 .ico
-    page.window.icon = "assets/tomato.ico"
-    page.window.version = "1.0.0"
+    # ❌ 【已删除】不再需要在这里指定窗口 icon 文件，交给打包指令即可
     # ==========================================
+    page.window.version = "1.0.0"
 
     page.title = "番茄钟"
     page.bgcolor = BG
@@ -195,7 +192,6 @@ def main(page: ft.Page):
     )
 
     page.add(card)
-
 
 if __name__ == "__main__":
     # 🌟 修正：改用官方最新的标准启动方法
