@@ -28,12 +28,12 @@ jobs:
       - name: 安装 Python 依赖
         run: |
           python -m pip install --upgrade pip
-          pip install --upgrade flet rich  # 强制升级到最新版 Flet 解决参数不识别Bug
+          pip install --upgrade flet rich
           if (Test-Path requirements.txt) { pip install -r requirements.txt }
 
       - name: 编译 Windows 软件 (.exe)
         run: |
-          flet build windows --no-rich --product "MyFletApp" --company "zhu" --version "1.0.0" --description "用 Python 开发的跨平台软件"
+          flet build windows --no-rich
 
       - name: 压缩打包文件
         run: |
@@ -74,12 +74,12 @@ jobs:
       - name: 安装 Python 依赖
         run: |
           python -m pip install --upgrade pip
-          pip install --upgrade flet rich  # 强制升级到最新版 Flet 解决参数不识别Bug
+          pip install --upgrade flet rich
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: 编译安卓 APK
         run: |
-          flet build apk --no-rich --product "MyFletApp" --version "1.0.0"
+          flet build apk --no-rich
 
       - name: 上传 APK 到 Release 页面
         uses: softprops/action-gh-release@v2
